@@ -50,3 +50,25 @@ def simulate_bacteria_dynamics(bacteria_name, pH, Temp, duration=48):
         dBiophaseBac_dt = ke * CentralBac - ke * BiophaseBac
 
         return [dResting_dt, dGrowing_dt, dCentralBac_dt, dBiophaseBac_dt]
+    # --- Solve the ODEs ---
+    result = odeint(model, y0, t)
+    Resting, Growing, CentralBac, _ = result.T
+
+    # --- Plotting ---
+    plt.figure(figsize=(10, 5))
+    plt.plot(t, Growing, color='dodgerblue', label="Growing", linewidth=2)
+    plt.plot(t, Resting, color='orangered', label="Resting", linewidth=2)
+    plt.plot(t, CentralBac, color='gold', label="B", linewidth=2)
+
+    plt.title(f"{bacteria_name}", fontsize=14, weight='bold', style='italic')
+    plt.xlabel("Time (Hours)")
+    plt.ylabel("Population / Bacteriocin (AU/ml)")
+    plt.ylim(0, Bmax * 1.1)
+    plt.xlim(0, duration)
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+# --- Example Use ---
+simulate_bacteria_dynamics("Staphylococcus aureus", pH=7.0, Temp=37.0)
