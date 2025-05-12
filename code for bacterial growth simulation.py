@@ -57,3 +57,7 @@ def simulate_bacteria_dynamics(bacteria_name, pH, Temp, duration=48):
         dBiophaseBac_dt = ke * CentralBac - ke * BiophaseBac
 
         return [dResting_dt, dGrowing_dt, dCentralBac_dt, dBiophaseBac_dt]
+    
+    # --- Solve ODEs ---
+    result = odeint(model, y0, t)
+    Resting, Growing, CentralBac, _ = result.T
