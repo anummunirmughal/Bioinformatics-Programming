@@ -61,3 +61,22 @@ def simulate_bacteria_dynamics(bacteria_name, pH, Temp, duration=48):
     # --- Solve ODEs ---
     result = odeint(model, y0, t)
     Resting, Growing, CentralBac, _ = result.T
+# --- Plotting ---
+    plt.figure(figsize=(10, 5))
+    plt.plot(t, Growing, color='dodgerblue', label="Growing", linewidth=2)
+    plt.plot(t, Resting, color='orangered', label="Resting", linewidth=2)
+    plt.plot(t, CentralBac, color='gold', label="B", linewidth=2)
+
+    plt.title(f"{bacteria_name} at pH={pH}, Temp={Temp}°C", fontsize=14)
+    plt.xlabel("Time (Hours)")
+    plt.ylabel("Population / Bacteriocin (AU/ml)")
+    plt.ylim(0, Bmax * 1.1)
+    plt.xlim(0, duration)
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+# ✅ Example comparisons — try changing values:
+simulate_bacteria_dynamics("Propionibacterium acnes", pH=7.0, Temp=37.0)
+simulate_bacteria_dynamics("Streptococcus mitis", pH=6.0, Temp=35.0)
