@@ -29,3 +29,6 @@ def simulate_bacteria_dynamics(bacteria_name, pH, Temp, duration=48):
     CentralBac0 = 0.0
     BiophaseBac0 = 0.0
     y0 = [Resting0, Growing0, CentralBac0, BiophaseBac0]
+
+ # --- Time Vector ---
+    t = np.linspace(0, duration, 500)
