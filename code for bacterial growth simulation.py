@@ -22,3 +22,10 @@ def simulate_bacteria_dynamics(bacteria_name, pH, Temp, duration=48):
     krs = krs_base / EFFECT if EFFECT > 0 else 0.1
     kdeath = kdeath_base / EFFECT if EFFECT > 0 else 0.1
     kdeg = kdeg_base * (2 - EFFECT)  # more degradation under stress
+
+    # --- Initial Conditions ---
+    Resting0 = 1e8
+    Growing0 = 1e6
+    CentralBac0 = 0.0
+    BiophaseBac0 = 0.0
+    y0 = [Resting0, Growing0, CentralBac0, BiophaseBac0]
