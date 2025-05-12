@@ -32,3 +32,28 @@ def simulate_bacteria_dynamics(bacteria_name, pH, Temp, duration=48):
 
  # --- Time Vector ---
     t = np.linspace(0, duration, 500)
+
+     # --- ODE System ---
+    def model(y, t):
+        Resting, Growing, CentralBac, BiophaseBac = y
+        total_bacteria = Resting + Growing
+
+        if t <= 8:
+            growth_effect = kgrowth * (1 - total_bacteria / K)
+        else:
+            growth_effect = kgrowth * max(1 - (t - 8) / 16, 0.05)
+
+        if t >= 4:
+            if CentralBac < Bmax:
+                bac_production = EFFECT * Growing * (1 - CentralBac / Bmax)
+            else:
+                bac_production = 0
+        else:
+            bac_production = 0
+
+        dResting_dt = -krs * Resting
+        dGrowing_dt = growth_effect * Resting - kdeath * Growing
+        dCentralBac_dt = bac_production - kdeg * CentralBac
+        dBiophaseBac_dt = ke * CentralBac - ke * BiophaseBac
+
+        return [dResting_dt, dGrowing_dt, dCentralBac_dt, dBiophaseBac_dt]
